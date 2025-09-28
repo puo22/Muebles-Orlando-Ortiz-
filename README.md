@@ -17,3 +17,10 @@ docker compose -f docker.yml up -d
 docker compose -f docker.yml down
 
 ```
+
+Abrir pagina web
+
+```bash
+
+node /back/conexion.js
+```
