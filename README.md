@@ -4,7 +4,8 @@ Sistematización de factura e inventario
 Tener instalado node, y ejecutar los comandos en su terminal
 ```bash
 npm init
-npm install mysql2
+npm install express mysql2 bcrypt body-parser cors
+
 ```
 
 Inicializacion del docker

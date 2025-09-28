@@ -81,26 +81,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lógica de Login/Registro (Solo simulación de estado para el frontend)
     if (loginForm) {
-        loginForm.addEventListener('submit', function(event) {
+        loginForm.addEventListener('submit', async function(event) {
             event.preventDefault(); 
-            isLoggedIn = true; 
-            const loginButton = document.getElementById('login-button');
-            loginButton.textContent = 'Bienvenido(a)';
-            loginButton.style.backgroundColor = '#556B2F'; 
-            loginButton.style.pointerEvents = 'none'; 
-            alert('¡Inicio de Sesión simulado exitoso! Ahora puedes enviar solicitudes críticas.');
-            // NOTA: El login REAL debe usar una Cloud Function para autenticación
+
+            const email = document.querySelector('#login-form input[name="email"], #login-email')?.value;
+            const password = document.querySelector('#login-form input[name="password"], #login-pass')?.value;
+
+            try {
+                const res = await fetch("http://localhost:3000/api/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+                alert(data.message || data.error);
+
+                if (res.ok) {
+                    isLoggedIn = true; 
+                    const loginButton = document.getElementById('login-button');
+                    if (loginButton) {
+                        loginButton.textContent = 'Bienvenido(a)';
+                        loginButton.style.backgroundColor = '#556B2F'; 
+                        loginButton.style.pointerEvents = 'none'; 
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Error en la conexión con el servidor");
+            }
         });
     }
+
     
     if (registroForm) {
-        registroForm.addEventListener('submit', function(event) {
+        registroForm.addEventListener('submit', async function(event) {
             event.preventDefault(); 
-            alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
-            // NOTA: El registro REAL debe usar una Cloud Function o Firebase Auth
-            registroForm.reset();
+
+            const email = document.querySelector('#registro-form input[name="email"], #registro-email')?.value;
+            const password = document.querySelector('#registro-form input[name="password"], #registro-pass')?.value;
+
+            try {
+                const res = await fetch("http://localhost:3000/api/registro", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+                alert(data.message || data.error);
+
+                if (res.ok) registroForm.reset();
+            } catch (error) {
+                console.error(error);
+                alert("Error en la conexión con el servidor");
+            }
         });
     }
+
     
     // ===========================================
     // LÓGICA DE FILTRADO Y DETALLE (Se mantiene igual)

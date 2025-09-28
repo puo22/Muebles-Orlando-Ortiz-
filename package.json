@@ -1,6 +1,7 @@
 {
   "name": "muebles-orlando-ortiz-",
   "version": "1.0.0",
+  "type": "module",
   "description": "Sistematización de factura e inventario",
   "main": "Pag.html",
   "scripts": {
@@ -17,6 +18,10 @@
   },
   "homepage": "https://github.com/rokko3/Muebles-Orlando-Ortiz-#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
     "mysql2": "^3.15.1"
   }
 }

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="/css/diseño.css"> 
+  <link rel="stylesheet" href="diseno.css"> 
 </head>
 <body>
 
@@ -292,33 +292,42 @@
   </section>
 
   <section id="auth" class="auth-section">
-      <div class="container">
-          <h2>Registro e Inicio de Sesión</h2>
-          <p class="section-desc">Crea tu cuenta para guardar tus pedidos y contactarte con nuestro equipo.</p>
-          <div class="grid">
-              <div class="form-card">
-                  <h3>Crear Cuenta</h3>
-                  <form id="registro-form">
-                      <label>Correo o Teléfono</label>
-                      <input type="text" placeholder="Correo o Teléfono" required>
-                      <label>Contraseña</label>
-                      <input type="password" placeholder="Contraseña segura" required>
-                      <button type="submit" class="btn">Registrarse</button>
-                  </form>
-              </div>
-              <div class="form-card">
-                  <h3>Iniciar Sesión</h3>
-                  <form id="login-form">
-                      <label>Correo o Teléfono</label>
-                      <input type="text" placeholder="Correo o Teléfono" required>
-                      <label>Contraseña</label>
-                      <input type="password" placeholder="Tu contraseña" required>
-                      <button type="submit" class="btn" id="login-submit-btn">Ingresar</button>
-                  </form>
-              </div>
-          </div>
+
+    <div class="container">
+      <h2>Registro e Inicio de Sesión</h2>
+      <p class="section-desc">Crea tu cuenta para guardar tus pedidos y contactarte con nuestro equipo.</p>
+      <div class="grid">
+
+      <!-- Registro -->
+        <div class="form-card">
+          <h3>Crear Cuenta</h3>
+          <form id="registro-form">
+            <label>Correo o Teléfono</label>
+            <input type="text" id="registro-email" name="email" placeholder="Correo o Teléfono" required>
+            <label>Contraseña</label>
+            <input type="password" id="registro-pass" name="password" placeholder="Contraseña segura" required>
+            <button type="submit" class="btn">Registrarse</button>
+          </form>
+        </div>
+
+      <!-- Login -->
+        <div class="form-card">
+          <h3>Iniciar Sesión</h3>
+          <form id="login-form">
+            <label>Correo o Teléfono</label>
+            <input type="text" id="login-email" name="email" placeholder="Correo o Teléfono" required>
+            <label>Contraseña</label>
+            <input type="password" id="login-pass" name="password" placeholder="Tu contraseña" required>
+            <button type="submit" class="btn" id="login-submit-btn">Ingresar</button>
+          </form>
+        </div>
+
       </div>
+    </div>
   </section>
+
+<script src="auth.js"></script>
+
 
   <section id="contacto" class="contacto">
     <div class="container">
@@ -368,7 +377,7 @@
     </div>
   </div>
   
-  <script src="/js/Func.js"></script>
+  <script src="Func.js"></script>
 
 </body>
 </html>
