@@ -6,3 +6,7 @@ Tener instalado node, y ejecutar los comandos en su terminal
 npm init
 npm install mysql
 ```
+a
+a
+aa
+a
