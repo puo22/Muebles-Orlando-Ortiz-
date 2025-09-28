@@ -1,0 +1,22 @@
+{
+  "name": "muebles-orlando-ortiz-",
+  "version": "1.0.0",
+  "description": "Sistematización de factura e inventario",
+  "main": "Pag.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rokko3/Muebles-Orlando-Ortiz-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rokko3/Muebles-Orlando-Ortiz-/issues"
+  },
+  "homepage": "https://github.com/rokko3/Muebles-Orlando-Ortiz-#readme",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
