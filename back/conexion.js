@@ -20,13 +20,16 @@ const db = await mysql.createPool({
   password: "admin",
   database: "muebles",
 });
+
+// Ejemplo para saber si funciona la bd 
+/* 
 try {
   const [rows] = await db.query("SHOW TABLES");
   console.log(rows);
 } catch (err) {
-  console.error("❌ Error de conexión:", err);
+  console.error(" Error de conexión:", err);
 }
-
+*/
 
 app.use(express.static(path.join(__dirname, "../public")));
 
@@ -39,10 +42,11 @@ app.post("/api/registro", async (req, res) => {
   const { email, password } = req.body;
   try {
     const hash = await bcrypt.hash(password, 10);
-    await db.query("INSERT INTO cliente (email, Contraseña) VALUES (?, ?)", [
-      email,
-      hash,
-    ]);
+    await db.query(
+        "INSERT INTO Cliente (cliente_id, Usuario, Nombre, Apellido, Telefono, email, Cedula, `Contraseña`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)",
+        [email, '', "", "", email, "", hash]
+    );
+
     res.json({ message: "Usuario registrado correctamente" });
   } catch (err) {
     console.error(err);
