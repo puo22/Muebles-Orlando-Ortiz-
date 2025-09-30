@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
+    
     // ===========================================
     // LÓGICA DE ESTADO DE AUTENTICACIÓN
     // ===========================================
