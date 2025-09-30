@@ -10,12 +10,30 @@ router.post("/registro", async (req, res) => {
   const { Usuario, Nombre, Apellido, Telefono, email, password } = req.body;
 
   try {
-    const hash = await bcrypt.hash(password, 10);
+    const [usuarios] = await db.query(
+      "SELECT * FROM Cliente WHERE email = ? OR Usuario = ?",
+      [email, Usuario]
+    );
+    if (usuarios.length > 0) {
 
+      const emailEnUso = usuarios.some(u => u.email === email);
+      const usuarioEnUso = usuarios.some(u => u.Usuario === Usuario);
+
+      let mensaje = "Ya existe ";
+      if (emailEnUso && usuarioEnUso) mensaje += "un usuario y un email registrados.";
+      else if (emailEnUso) mensaje += "un email registrado.";
+      else mensaje += "un usuario registrado.";
+
+      return res.status(400).json({ error: mensaje });
+    }
+    
+    const hash = await bcrypt.hash(password, 10);
     await db.query(
       "INSERT INTO Cliente (Usuario, Nombre, Apellido, Telefono, email, `Contraseña`) VALUES (?, ?, ?, ?, ?, ?)",
       [Usuario, Nombre, Apellido, Telefono, email, hash]
     );
+
+    
 
     res.json({ message: "Usuario registrado correctamente" });
   } catch (err) {
