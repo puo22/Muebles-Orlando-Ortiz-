@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const registroForm = document.getElementById('registerForm');
     const loginForm=document.getElementById('loginForm');
 
+
     if (registroForm) {
         registroForm.addEventListener('submit', async function(event) {
             event.preventDefault();
@@ -47,41 +48,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     if (loginForm) {
-    loginForm.addEventListener('submit', async function(event) {
-        event.preventDefault();
 
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
+        loginForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
 
-        if (!email || !password) {
-            alert("Todos los campos son obligatorios");
-            return;
-        }
-        if (!/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-            alert("Correo electronico no valido.");
-            return;
-        }
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
-        try {
-            const res = await fetch("http://localhost:4000/api/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password })
-            });
-
-            const data = await res.json();
-            alert(data.message || data.error);
-
-            if (res.ok) {
-                loginForm.reset();
-                // Redirige o guarda datos según tu lógica
-                // window.location.href = "Pag.html";
+            if (!email || !password) {
+                alert("Todos los campos son obligatorios");
+                return;
             }
-        } catch (error) {
+            if (!/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+                alert("Correo electronico no valido.");
+                return;
+            }
 
-            console.error(error);
-            alert("Error en la conexión con el servidor");
-          }
-      });
+            try {
+                const res = await fetch("http://localhost:4000/api/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+                alert(data.message || data.error);
+
+                if (res.ok) {
+                    loginForm.reset();
+                    window.location.href = "Pag.html";
+                }
+            } catch (error) {
+
+                console.error(error);
+                alert("Error en la conexión con el servidor");
+            }
+        });
     }
 });
