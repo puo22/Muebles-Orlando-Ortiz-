@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const registroForm = document.getElementById('registerForm'); // <--- Asegúrate de esto
+    const registroForm = document.getElementById('registerForm');
+    const loginForm=document.getElementById('loginForm');
 
     if (registroForm) {
         registroForm.addEventListener('submit', async function(event) {
@@ -11,7 +12,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const Telefono = document.getElementById('Telefono').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            if (!Usuario || !Nombre || !Apellido || !Telefono || !email || !password) {
 
+              alert("Todos los campos son obligatorios");
+              return;
+            }
+            if (!/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+              alert("Correo electrónico no valido.");
+              return;
+            }
+            if (password.length < 6) {
+              alert("La contraseña debe tener al menos 6 caracteres");
+              return;
+            }
+            if (!/^\d{10}$/.test(Telefono)) {
+              alert("El telefono debe contener 10 numeros");
+              return;
+            }
             try {
                 const res = await fetch("http://localhost:4000/api/registro", {
                     method: "POST",
