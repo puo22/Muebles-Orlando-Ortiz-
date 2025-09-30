@@ -22,5 +22,5 @@ Abrir pagina web
 
 ```bash
 
-node /back/conexion.js
+node /back/servidor.js
 ```
