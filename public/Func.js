@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     
     // ===========================================
     // LÓGICA DE ESTADO DE AUTENTICACIÓN
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.querySelector('#registro-form input[name="password"], #registro-pass')?.value;
 
             try {
-                const res = await fetch("http://localhost:3000/api/registro", {
+                const res = await fetch("http://localhost:4000/api/registro", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email, password })

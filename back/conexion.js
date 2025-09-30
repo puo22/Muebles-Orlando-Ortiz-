@@ -43,8 +43,8 @@ app.post("/api/registro", async (req, res) => {
   try {
     const hash = await bcrypt.hash(password, 10);
     await db.query(
-        "INSERT INTO Cliente (cliente_id, Usuario, Nombre, Apellido, Telefono, email, Cedula, `Contraseña`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)",
-        [email, '', "", "", email, "", hash]
+        "INSERT INTO Cliente (cliente_id, Usuario, Nombre, Apellido, Telefono, email, `Contraseña`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)",
+        [email, '', "", "", email, hash]
     );
 
     res.json({ message: "Usuario registrado correctamente" });

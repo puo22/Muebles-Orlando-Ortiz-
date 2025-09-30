@@ -16,7 +16,6 @@ CREATE TABLE Cliente (
     Apellido VARCHAR(100) NOT NULL,
     Telefono VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    Cedula VARCHAR(20) NOT NULL,
     Contraseña VARCHAR(255) NOT NULL,
     CONSTRAINT uk_cliente_usuario UNIQUE (Usuario),
     CONSTRAINT uk_cliente_email UNIQUE (email),
