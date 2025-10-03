@@ -35,7 +35,7 @@
     <script src="session.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            // Verificar autenticación y mostrar datos
+            
             const usuario = await protegerPagina();
             if (usuario) {
                 mostrarDatosUsuario(usuario);

@@ -1,19 +1,19 @@
-// Función para verificar si el usuario está autenticado
+
 async function verificarAutenticacion() {
   try {
     const res = await fetch('http://localhost:4000/api/verificar-sesion', {
       method: 'GET',
-      credentials: 'include' // Importante para enviar cookies
+      credentials: 'include'
     });
 
     if (res.ok) {
       const data = await res.json();
-      return data.usuario; // {id: 123, email: "user@email.com"}
+      return data.usuario; 
     } else {
-      return null; // No autenticado
+      return null; 
     }
   } catch (error) {
-    console.error('Error verificando autenticación:', error);
+    console.error('Error verificando autenticacion:', error);
     return null;
   }
 }
@@ -23,8 +23,7 @@ async function protegerPagina() {
   const usuario = await verificarAutenticacion();
   
   if (!usuario) {
-    // Redirigir al login si no está autenticado
-    alert("Debes iniciar sesión para acceder a esta página");
+    alert("Debes iniciar sesion para acceder a esta pagina");
     window.location.href = 'Pag.html';
     return null;
   }
@@ -32,9 +31,7 @@ async function protegerPagina() {
   return usuario;
 }
 
-// Función para mostrar datos del usuario en la página
 function mostrarDatosUsuario(usuario) {
-  // Actualizar elementos del DOM con datos del usuario
   const elementos = {
     'user-email': usuario.email,
     'user-id': usuario.id,
@@ -49,7 +46,6 @@ function mostrarDatosUsuario(usuario) {
   });
 }
 
-// Función para hacer logout
 async function logout() {
   try {
     const res = await fetch('http://localhost:4000/api/logout', {
@@ -58,10 +54,10 @@ async function logout() {
     });
 
     if (res.ok) {
-      alert("Sesión cerrada exitosamente");
+      alert("Sesion cerrada exitosamente");
       window.location.href = 'Pag.html';
     } else {
-      alert("Error al cerrar sesión");
+      alert("Error al cerrar sesion");
     }
   } catch (error) {
     console.error('Error en logout:', error);

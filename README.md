@@ -4,7 +4,7 @@ Sistematización de factura e inventario
 Tener instalado node, y ejecutar los comandos en su terminal
 ```bash
 npm init
-npm install express mysql2 bcrypt body-parser cors jsonwebtoken
+npm install express mysql2 bcrypt body-parser cors jsonwebtoken cookie-parser
 
 ```
 
