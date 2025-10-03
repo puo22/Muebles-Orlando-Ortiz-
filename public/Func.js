@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const citaForm = document.getElementById('cita-form');
     const catalogoForm = document.getElementById('catalogo-form');
     const refaccionForm = document.getElementById('refaccion-form');
-    const registroForm = document.getElementById('registro-form');
-    const loginForm = document.getElementById('login-form');
 
     // Función de validación de LOGIN
     function validateLogin(event) {

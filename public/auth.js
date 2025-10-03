@@ -77,7 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (res.ok) {
                     loginForm.reset();
                     window.location.href = "Pag.html";
+                }else{
+                    alert("Error en la autenticacion");
+
                 }
+                    
+    
             } catch (error) {
 
                 console.error(error);

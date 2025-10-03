@@ -1,9 +1,63 @@
 
 import express from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"
 import db from "./base_datos.js";
+import { JWT_SECRET } from "./config.js";
 
 const router = express.Router();
+const manejarErrorBD = (error) => {
+  console.error('Error de base de datos:', error);
+  
+  if (error.code === 'ECONNREFUSED') {
+    return { 
+      status: 503, 
+      message: "No se puede conectar a la base de datos. Verifique que Docker esté corriendo." 
+    };
+  }
+  
+  if (error.code === 'ENOTFOUND') {
+    return { 
+      status: 503, 
+      message: "Servidor de base de datos no encontrado." 
+    };
+  }
+  
+  if (error.code === 'ER_ACCESS_DENIED_ERROR') {
+    return { 
+      status: 503, 
+      message: "Error de credenciales de base de datos." 
+    };
+  }
+  
+  if (error.code === 'ETIMEDOUT') {
+    return { 
+      status: 503, 
+      message: "Timeout de conexión a la base de datos." 
+    };
+  }
+  
+  return { 
+    status: 500, 
+    message: "Error interno del servidor." 
+  };
+};
+// Verificar el token
+export const verificarToken = (req, res, next) => {
+  const token = req.cookies.acces_token;
+  
+  if (!token) {
+    return res.status(401).json({ error: "Acceso no autorizado" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    req.usuario = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({ error: "Acceso no autorizado" });
+  }
+};
 
 // Registro
 router.post("/registro", async (req, res) => {
@@ -39,6 +93,9 @@ router.post("/registro", async (req, res) => {
   } catch (err) {
     console.log(err)
     console.error(err);
+    const errorInfo = manejarErrorBD(err);
+    res.status(errorInfo.status).json({ error: errorInfo.message });
+    // Si no se manejó el error, enviar un error genérico
     res.status(500).json({ error: "Error en el registro" });
   }
 });
@@ -60,15 +117,40 @@ router.post("/login", async (req, res) => {
     if (!match) {
       return res.status(400).json({ error: "Contraseña incorrecta" });
     }
+    const acces_token=jwt.sign({id:usuario.cliente_id,email:usuario.email},JWT_SECRET,{
+        expiresIn:'2h'
+    });
 
+    res.cookie('acces_token',acces_token,{
+      httpOnly:true,
+      secure:false,
+      maxAge:2*60*60*1000
+    })
     res.json({
       message: "Login exitoso",
-      usuario: { id: usuario.cliente_id, email: usuario.email }
+      usuario: { id: usuario.cliente_id, email: usuario.email },
     });
   } catch (err) {
     console.error(err);
+    const errorInfo = manejarErrorBD(err);
+    res.status(errorInfo.status).json({ error: errorInfo.message });
+    // Si no se manejó el error, enviar un error genérico 
     res.status(500).json({ error: "Error en el login" });
   }
 });
 
+router.post("/logout", verificarToken, (req, res) => {
+  
+  res.clearCookie('acces_token');
+  res.json({ message: "Logout exitoso" });
+});
+
+router.post("/protegido",verificarToken,(req,res)=>{
+  const {user}=req.usuario;
+  if(!user){
+    return res.status(401).json({error:"No autenticado"})
+  }
+  res.render('protegido',{user});
+
+});
 export default router;

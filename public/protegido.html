@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Protegida - Muebles Orlando Ortiz</title>
+    <link rel="stylesheet" href="diseno.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Muebles Orlando Ortiz</h1>
+            <div class="user-info">
+                <span id="welcome-message">Cargando...</span>
+                <button id="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="user-panel">
+            <h2>Panel de Usuario</h2>
+            <div class="user-details">
+                <p><strong>Email:</strong> <span id="user-email">-</span></p>
+                <p><strong>ID:</strong> <span id="user-id">-</span></p>
+            </div>
+        </section>
+
+        <section class="protected-content">
+            <h2>Contenido Protegido</h2>
+            <p>Esta es una página que solo pueden ver usuarios autenticados.</p>
+            <!-- Aquí va tu contenido protegido -->
+        </section>
+    </main>
+
+    <script src="session.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Verificar autenticación y mostrar datos
+            const usuario = await protegerPagina();
+            if (usuario) {
+                mostrarDatosUsuario(usuario);
+            }
+        });
+    </script>
+</body>
+</html>
