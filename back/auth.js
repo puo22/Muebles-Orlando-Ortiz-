@@ -6,6 +6,7 @@ import db from "./base_datos.js";
 import { JWT_SECRET } from "./config.js";
 
 const router = express.Router();
+
 const manejarErrorBD = (error) => {
   console.error('Error de base de datos:', error);
   
@@ -91,12 +92,10 @@ router.post("/registro", async (req, res) => {
 
     res.json({ message: "Usuario registrado correctamente" });
   } catch (err) {
-    console.log(err)
     console.error(err);
     const errorInfo = manejarErrorBD(err);
     res.status(errorInfo.status).json({ error: errorInfo.message });
     // Si no se manejó el error, enviar un error genérico
-    res.status(500).json({ error: "Error en el registro" });
   }
 });
 
@@ -139,18 +138,36 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/logout", verificarToken, (req, res) => {
-  
-  res.clearCookie('acces_token');
-  res.json({ message: "Logout exitoso" });
+router.get("/verificar-sesion", verificarToken, (req, res) => {
+  res.json({ 
+    valid: true, 
+    usuario: req.usuario // Contiene {id, email} del JWT
+  });
 });
 
-router.post("/protegido",verificarToken,(req,res)=>{
-  const {user}=req.usuario;
-  if(!user){
-    return res.status(401).json({error:"No autenticado"})
-  }
-  res.render('protegido',{user});
+// Ruta para obtener datos del usuario (NUEVA)
+router.get("/perfil", verificarToken, (req, res) => {
+  res.json({
+    message: "Acceso autorizado",
+    usuario: req.usuario
+  });
+});
 
+// CORREGIR la ruta protegido:
+router.get("/protegido", verificarToken, (req, res) => {
+  // req.usuario contiene {id, email}, no {user}
+  res.json({
+    message: "Acceso a página protegida",
+    usuario: req.usuario // {id: 123, email: "user@email.com"}
+  });
+});
+router.post("/logout", (req, res) => {
+  res.clearCookie('acces_token', {
+    httpOnly: true,
+    secure: false,
+    sameSite: 'lax'
+  });
+  
+  res.json({ message: "Logout exitoso" });
 });
 export default router;
